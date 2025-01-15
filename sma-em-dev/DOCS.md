@@ -1,6 +1,27 @@
-# Configuration *developer version*
+# Configuration (developer version)
 
 ## Parameters
+
+- `SMA_DEVICES`
+
+  This should contain of the list of devices and their prefix in Home Assistant
+
+  Serial numbers not found in the configuration will be printed in the log
+
+  Example:
+
+  ```yaml
+  SMA_DEVICES:
+    - SERIAL_NR: 007
+      PREFIX: sma
+    - SERIAL_NR: 008
+      PREFIX: sma2
+  ```
+
+- `FIELDS`
+
+  These can be any value supported by the SMA-EM library. A list of options can be found
+  [below](*available-sensors)
 
 - `MQTT_*`
 
@@ -8,14 +29,21 @@
   The default configuration assumes the Mosquitto broker add-on and you simply have to
   fill in your password.
 
-- `FIELDS`
+- `MCASTGRP`
 
-  These can be any value supported by the SMA-EM library. A list of options can be found
-  [below](*available-sensors)
+  Multicast address that is configured in the SMA Energy Meter. Default value is 239.12.255.254.
+
+- `IPBIND`
+
+  Multicast address that is configured in the SMA Energy Meter. Default value is 239.12.255.254.
 
 - `THRESHOLD`
 
   Used for smart sensors, see the field modifiers below.
+
+- `RECONNECT_INTERVAL`
+
+  Interval to reconnect to the SMA Energy Meter. Default value is 86400 seconds.
 
 - `DEBUG`
 
@@ -24,16 +52,9 @@
 
   Recommended value: 0
 
-- `SMA_SERIALS`
-
-  This value can contain a space separated list of serial numbers for which to capture
-  packets
-
-  This is optional, if empty, all SMA energy meters will be reported
-
 ## Available sensors
 
-The following list contains all possible `FIELD` names that you can use with the add-on
+The following list contains all possible values you can include in `FIELDS`
 
 ```text
 pconsume,  pconsumecounter,
@@ -96,11 +117,11 @@ interval of the SMA Energy meter (1 second)
 
 Other modifiers
 
-| Modifier | Description                                                                                                                      |
-| -------- | :------------------------------------------------------------------------------------------------------------------------------- |
-| `:max`   | the maximum value over the last 60 seconds. <br/> Ideal for _counters_ where you are typically interested only in the last value |
-| `:min`   | the minimum value over the last 60 seconds.                                                                                      |
-| `:<s>`   | any integer will allow you to get the average over the indicated amount of seconds. `:5`=5 seconds, `:60`=60 seconds             |
+| Modifier | Description                                                                                                                        |
+| -------- | :--------------------------------------------------------------------------------------------------------------------------------- |
+| `:max`   | the maximum value over the last 60 seconds. <br/> Ideal for **counters** where you are typically interested only in the last value |
+| `:min`   | the minimum value over the last 60 seconds.                                                                                        |
+| `:<s>`   | any integer will allow you to get the average over the indicated amount of seconds. `:5`=5 seconds, `:60`=60 seconds               |
 
 ## Home Assistant Utility meter
 
