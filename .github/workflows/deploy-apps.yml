@@ -1,0 +1,47 @@
+name: Deploy sma-em addon to ghcr.io
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    branches: [main]
+    types:
+      - completed
+  workflow_dispatch: {}
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    name: Test changed-files
+    permissions:
+      contents: write
+      id-token: write
+      packages: write
+      pull-requests: read
+    #secrets: inherit
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v6.0.2
+
+      - name: Get all files that have changed
+        id: changed
+        uses: tj-actions/changed-files@v47
+        with:
+          files_yaml: |
+            sma_em:
+              - ".github/workflows/deploy-apps.yml"
+              - "sma-em/**"
+              - "sma-em-dev/**"
+              - "src/ha_addon_sma/**"
+
+    outputs:
+      changed_sma_em: ${{ steps.changed.outputs.esp_any_changed }}
+
+  deploy_sma_em:
+    needs: [check]
+    if: needs.check.outputs.changed_sma_em == 'true'
+    uses: kellerza/hass-addons/.github/workflows/deployer2.yml@main
+    secrets: inherit
+    with:
+      app: sma-em
+      app-edge: sma-em-dev
+      publish: true
