@@ -3,7 +3,7 @@ cd "$(dirname "$0")" || exit 1
 
 export ADDON="$1"
 export VER="$2"
-export PACKAGE="ha_addon_sma"
+export PACKAGE="sma"
 
 if [ -z "$VER" ] || [ -z "$ADDON" ]; then
   echo "Error: Usage $0 <addon> <version>"
