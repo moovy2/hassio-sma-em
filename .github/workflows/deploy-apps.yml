@@ -32,6 +32,7 @@ jobs:
               - "sma-em/**"
               - "sma-em-dev/**"
               - "src/ha_addon_sma/**"
+              - "build_prep.sh"
 
     outputs:
       changed_sma_em: ${{ steps.changed.outputs.esp_any_changed }}
