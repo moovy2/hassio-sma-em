@@ -35,7 +35,7 @@ jobs:
               - "build_prep.sh"
 
     outputs:
-      changed_sma_em: ${{ steps.changed.outputs.esp_any_changed }}
+      changed_sma_em: ${{ steps.changed.outputs.sma_em_any_changed }}
 
   deploy_sma_em:
     needs: [check]
