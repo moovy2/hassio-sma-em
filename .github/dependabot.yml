@@ -13,8 +13,5 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-    # groups:
-    #   dev-deps:
-    #     dependency-type: "development"
     allow:
       - dependency-type: "production"
